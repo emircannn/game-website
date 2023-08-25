@@ -1,4 +1,4 @@
-
+import { PacmanLoader} from 'react-spinners'
 const Button = ({
     title,
     px= '30',
@@ -51,9 +51,10 @@ const Button = ({
     ${height}
     `}>
 
-            {iconLeft}
-            {title}
-            {iconRight}
+            {!disabled && iconLeft}
+            {!disabled && title}
+            {!disabled && iconRight}
+            {disabled && <PacmanLoader color='#fff' size={10}/>}
     </button>
   )
 }

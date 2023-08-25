@@ -5,11 +5,15 @@ import Ubisoft from '@/public/icons/ubisoft.svg'
 import Youtube from '@/public/icons/yt.svg'
 import Twitch from '@/public/icons/twitch.svg'
 import Discord from '@/public/icons/dc.svg'
+import moment from 'moment';
+require('moment/locale/tr');
+
 
 const UserInfo = ({
-    username
+    username,
+    userInfo
 }) => {
-
+    
     const Platform = ({icon, disabeled, color='#120e47'}) => {
         return (
             <button 
@@ -21,21 +25,26 @@ const UserInfo = ({
         )
     }
 
+    const turkishDateFormat = 'D MMMM YYYY';
+    moment.locale('tr'); 
+    const date = moment(userInfo?.createdAt).format(turkishDateFormat);
+
   return (
     <div className="flex flex-col items-center justify-center my-4">
         <Avatar
             height="120"
             width="120"
             backgroundColor='#120e47'
+            src={userInfo?.image}
         />
 
         <div className="m-[15px] flex flex-col items-center">
             <h1 className="text-white font-semibold text-[32px]">
-            {username}
+            {userInfo?.username}
             </h1>
 
             <span className="text-secondary-light text-[13px]">
-                16 Mart 2023 Tarihinden Beri Üye
+                {date} Tarihinden Beri Üye
             </span>
 
             <div className="mt-[15px] flex items-center gap-[10px] justify-center flex-wrap">

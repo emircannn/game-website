@@ -3,7 +3,12 @@ import Button from '@/components/UI & Layout/Form/Button'
 import Input from '@/components/UI & Layout/Form/Input'
 import { registerSchema } from '@/schema/register'
 import { animated, useSpring } from '@react-spring/web'
+import axios from 'axios'
 import { useFormik } from 'formik'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { setCookie } from 'cookies-next';
 
 const SignUp = ({setLogin}) => {
 
@@ -11,6 +16,32 @@ const SignUp = ({setLogin}) => {
         from: { x: -500 },
         to: { x: 0 },
       })
+
+      const {reload} = useRouter()
+
+      const [loading, setLoading] = useState(false)
+
+      const onSubmit = async() => {
+        try {
+          const form = {
+            name: values.name,
+            username: values.username,
+            email: values.email,
+            password: values.password
+          }
+          setLoading(true)
+          const res = await axios.post(`${process.env.REQUEST}auth/signup`, form)
+          if(!res.data.error) {
+            toast.success(res.data.message, {position: 'bottom-center'})
+            setLoading(false)
+            localStorage.setItem('authToken', res.data.token);
+            reload()
+          }
+        } catch (error) {
+          toast.error(error.response.data.message.split(':')[1], {position: 'bottom-center'})
+          setLoading(false)
+        }
+      };
 
 
       const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
@@ -22,6 +53,7 @@ const SignUp = ({setLogin}) => {
           password: "",
           confirmPassword: "",
         },
+        onSubmit,
         validationSchema: registerSchema,
         });
 
@@ -76,7 +108,7 @@ const SignUp = ({setLogin}) => {
   return (
     <animated.div
         style={{...springs}}>
-            <form className="mt-[40px] flex flex-col gap-[15px]">
+            <div className="mt-[40px] flex flex-col gap-[15px]">
             {inputs.map((input) => (
               <Input
               key={input.name}
@@ -95,8 +127,11 @@ const SignUp = ({setLogin}) => {
             <Button
             title='Üye Ol'
             type='submit'
+            disabled={loading}
+            height='h-[50px]'
+            onClick={() => handleSubmit()}
             />
-        </form>
+        </div>
     </animated.div>
   )
 }

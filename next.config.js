@@ -28,6 +28,12 @@ const nextConfig = {
 
     return config
   },
+  env: {
+    REQUEST: process.env.REQUEST,
+  },
+  images: {
+    domains: ['localhost']
+  },
 }
 
 module.exports = nextConfig

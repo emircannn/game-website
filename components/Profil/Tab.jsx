@@ -7,8 +7,6 @@ const Tab = ({
 
     const {asPath, push} = useRouter()
 
-    console.log(asPath)
-
     const TabItems = ({title, pathname, icon}) => {
         return (
             <li 
