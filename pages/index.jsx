@@ -10,11 +10,24 @@ import Weekly from '@/components/Home/Weekly'
 import Footer from '@/components/UI & Layout/Footer'
 import FeedBack from '@/components/Degerlendirme/FeedBack'
 import GameWrapper from '@/components/UI & Layout/GameWrapper'
+import { useContext, useEffect } from 'react'
+import { UserContext } from '@/context/userContext'
 
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  const {setUser} = useContext(UserContext)
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken')
+    if (!token) {
+        setUser(null)
+    }
+  }, [setUser])
+  
+
   return (
     <>
       <Head>

@@ -6,28 +6,41 @@ import Youtube from '@/public/icons/yt.svg'
 import Twitch from '@/public/icons/twitch.svg'
 import Discord from '@/public/icons/dc.svg'
 import moment from 'moment';
+import { useContext } from "react"
+import { UserContext } from "@/context/userContext"
+import Link from "next/link"
+import { dateFormater } from "@/utils/helper"
 require('moment/locale/tr');
 
 
 const UserInfo = ({
-    username,
-    userInfo
 }) => {
     
-    const Platform = ({icon, disabeled, color='#120e47'}) => {
+    const Platform = ({icon, disabeled, color='#120e47', link}) => {
         return (
-            <button 
+            <>
+            {link ? 
+            <Link href={link}>
+                <button 
             style={{backgroundColor: color}}
             className="w-[45px] h-[45px] rounded-full flex items-center justify-center disabled:opacity-50 overflow-hidden"
             disabled={disabeled}>
                 {icon}
             </button>
+            </Link>: 
+            <button 
+            style={{backgroundColor: color}}
+            className="w-[45px] h-[45px] rounded-full flex items-center justify-center disabled:opacity-50 overflow-hidden"
+            disabled={disabeled}>
+                {icon}
+            </button>}
+            </>
         )
     }
+    const {user} = useContext(UserContext)
 
-    const turkishDateFormat = 'D MMMM YYYY';
-    moment.locale('tr'); 
-    const date = moment(userInfo?.createdAt).format(turkishDateFormat);
+
+    const date = dateFormater(user?.createdAt)
 
   return (
     <div className="flex flex-col items-center justify-center my-4">
@@ -35,12 +48,12 @@ const UserInfo = ({
             height="120"
             width="120"
             backgroundColor='#120e47'
-            src={userInfo?.image}
+            src={user?.image}
         />
 
         <div className="m-[15px] flex flex-col items-center">
             <h1 className="text-white font-semibold text-[32px]">
-            {userInfo?.username}
+            {user?.username}
             </h1>
 
             <span className="text-secondary-light text-[13px]">
@@ -50,29 +63,35 @@ const UserInfo = ({
             <div className="mt-[15px] flex items-center gap-[10px] justify-center flex-wrap">
                 <Platform
                     icon={<Steam/>}
-                    disabeled={true}
+                    disabeled={user?.steamLink !== null ? false : true}
+                    link={user?.steamLink}
                 />
                 <Platform
                     icon={<Ubisoft width='24' heiht='24' fill='#b6b6f8'/>}
-                    disabeled={true}
+                    disabeled={user?.ubisoftLink !== null ? false : true}
+                    link={user?.ubisoftLink}
                 />
                 <Platform
                     icon={<Ea width='22' heiht='22' fill='#eb5f5f'/>}
-                    disabeled={true}
+                    disabeled={user?.eaLink !== null ? false : true}
+                    link={user?.eaLink}
                     color="#992828"
                 />
                 <Platform
                     icon={<Youtube width='22' heiht='22'/>}
-                    disabeled={true}
+                    disabeled={user?.youtubeLink !== null ? false : true}
+                    link={user?.youtubeLink}
                     color="#992828"
                 />
                 <Platform
                     icon={<Twitch width='24' heiht='24' fill='#b6b6f8'/>}
-                    disabeled={true}
+                    disabeled={user?.twitchLink !== null ? false : true}
+                    link={user?.twitchLink}
                 />
                 <Platform
                     icon={<Discord width='24' heiht='24' fill='#b6b6f8'/>}
-                    disabeled={true}
+                    disabeled={user?.discordLink !== null ? false : true}
+                    link={user?.discordLink}
                 />
             </div>
         </div>

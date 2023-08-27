@@ -3,17 +3,19 @@ import Heart from '../../public/icons/heartfill.svg'
 import EmptyHeart from '../../public/icons/heart.svg' 
 import tailwindConfig from "@/tailwind.config"
 
-const StyledRating = () => {
+const StyledRating = ({
+  value= 4,
+  gap= 1,
+  size='25'
+}) => {
   return (
-    <div>
         <Rating 
         name="read-only" 
-        value={4} 
+        value={value} 
         readOnly
-        sx={{ gap: 1 }}
-        icon={<Heart height='20' width='20'/>} 
-        emptyIcon={<EmptyHeart fill={tailwindConfig.theme.extend.colors.secondary} height='20' width='20'/>}/>
-    </div>
+        sx={{ gap }}
+        icon={<Heart height={size} width={size}/>} 
+        emptyIcon={<EmptyHeart fill={tailwindConfig.theme.extend.colors.secondary} height={size} width={size}/>}/>
   )
 }
 

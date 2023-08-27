@@ -3,13 +3,27 @@ import Tab from "@/components/Profil/Tab"
 import UserInfo from "@/components/Profil/UserInfo"
 import Footer from "@/components/UI & Layout/Footer"
 import Header from "@/components/UI & Layout/Header"
+import { UserContext } from "@/context/userContext"
 import Head from "next/head"
 import { useRouter } from "next/router"
+import { useContext, useEffect } from "react"
 
 const SettingsPage = () => {
 
-    const {query} = useRouter()
+    const {query, push} = useRouter()
     const {username} = query
+
+    const {user} = useContext(UserContext)
+
+    useEffect(() => {
+      if(user?.username !== username) {
+        push(`/profil/${user?.username}/ayarlar`)
+      }
+      if(!user) {
+        push('/oturum')
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user, username])
 
   return (
     <>
@@ -27,7 +41,9 @@ const SettingsPage = () => {
             username={username}
           />
 
-          <Settings/>
+          <Settings
+            user={user}
+          />
         </main>
         <Footer/>
     </>

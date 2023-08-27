@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useContext, useState } from 'react'
 import {AiOutlineSearch} from 'react-icons/ai'
 import {CgClose} from 'react-icons/cg'
 import SearchCont from './SearchCont'
@@ -7,11 +7,15 @@ import User from '../../public/icons/user.svg'
 import { useRouter } from 'next/router'
 import Logo from './Logo'
 import Link from 'next/link'
+import { UserContext } from '@/context/userContext'
+import ProfilButton from './ProfilButton'
 
 
 const Header = () => {
     const [search, setSearch] = useState(false)
     const {push} = useRouter()
+    const {user} = useContext(UserContext)
+
   return (
     <header className='w-full flex bg-transparent gap-[8px] items-center justify-between py-[20px] max-768:px-[10px] 768:px-[50px]'>
             <Logo/>
@@ -47,16 +51,22 @@ const Header = () => {
 
             {search && <SearchCont/>}
 
-        <div className='flex items-center z-10 768:gap-[18px] text-white'>
+        <div className='flex items-center z-10 768:gap-[18px] text-white gap-[10px]'>
         <Link href='/sepet'>
         <button className='768:p-[12px] p-[6px] hover:bg-secondary duration-300 rounded-xl'>
         <Cart width='22' height='22' fill='#fff'/>
         </button>
         </Link>
 
+        { user ? 
+        <ProfilButton
+            user={user}
+        />
+        :
         <button onClick={() => push('/oturum')} className='768:p-[12px] p-[6px] bg-primary-light hover:border-graident-dark border-2 border-transparent duration-300 rounded-xl'>
         <User width='22' height='22' fill='#b6b6f8'/>
         </button>
+        }
         </div>
     </header>
   )

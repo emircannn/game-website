@@ -31,7 +31,6 @@ const Summary = () => {
                     height='h-[55px]'
                     title='Ödeme Yap'
                     iconRight={<BsArrowRightShort size={24} className="text-white"/>}
-                    disabled={true}
                 />
             </div>
 

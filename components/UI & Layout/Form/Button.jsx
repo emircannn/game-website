@@ -18,7 +18,7 @@ const Button = ({
     disabled,
     width,
     height,
-    type
+    type,
 }) => {
 
 
