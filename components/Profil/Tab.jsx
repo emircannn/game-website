@@ -1,4 +1,6 @@
+import { UserContext } from "@/context/userContext"
 import { useRouter } from "next/router"
+import { useContext } from "react"
 import { AiFillSetting } from "react-icons/ai"
 
 const Tab = ({
@@ -6,6 +8,7 @@ const Tab = ({
 }) => {
 
     const {asPath, push} = useRouter()
+    const {user} = useContext(UserContext)
 
     const TabItems = ({title, pathname, icon}) => {
         return (
@@ -25,35 +28,35 @@ const Tab = ({
             <ul className="flex items-center gap-[20px] flex-wrap">
                 <TabItems
                     title='Dashboard'
-                    pathname={`/profil/${username}`}
+                    pathname={`/profil/${user?.username}`}
                 />
                 <TabItems
                     title='Siparişlerim'
-                    pathname={`/profil/${username}/siparislerim`}
+                    pathname={`/profil/${user?.username}/siparislerim`}
                 />
                 <TabItems
                     title='İstek Listesi'
-                    pathname={`/profil/${username}/isteklistesi`}
+                    pathname={`/profil/${user?.username}/isteklistesi`}
                 />
                 <TabItems
                     title='Kütüphane'
-                    pathname={`/profil/${username}/kutuphane`}
+                    pathname={`/profil/${user?.username}/kutuphane`}
                 />
                 <TabItems
                     title='Arkadaşlar'
-                    pathname={`/profil/${username}/arkadaslar`}
+                    pathname={`/profil/${user?.username}/arkadaslar`}
                 />
                 <TabItems
                     title='Değerlendirmeler'
-                    pathname={`/profil/${username}/degerlendirmeler`}
+                    pathname={`/profil/${user?.username}/degerlendirmeler`}
                 />
             </ul>
 
                 <ul>
                 <TabItems
                     title='Ayarlar'
-                    pathname={`/profil/${username}/ayarlar`}
-                    icon={<AiFillSetting size={22} className={`${asPath === `/profil/${username}/ayarlar` ? 'text-secondary' : 'text-white'}`}/>}
+                    pathname={`/profil/${user?.username}/ayarlar`}
+                    icon={<AiFillSetting size={22} className={`${asPath === `/profil/${user?.username}/ayarlar` ? 'text-secondary' : 'text-white'}`}/>}
                 />
                 </ul>
         </div>

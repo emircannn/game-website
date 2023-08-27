@@ -1,11 +1,12 @@
 import Button from '@/components/UI & Layout/Form/Button'
 import Input from '@/components/UI & Layout/Form/Input'
+import { UserContext } from '@/context/userContext'
 import { loginSchema } from '@/schema/login'
 import { animated, useSpring } from '@react-spring/web'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { FcGoogle } from 'react-icons/fc'
 
@@ -15,8 +16,9 @@ const LogIn = () => {
         from: { x: -500 },
         to: { x: 0 },
       })
-      const {reload} = useRouter()
+      const {push} = useRouter()
       const [loading, setLoading] = useState(false)
+      const {setUser} = useContext(UserContext)
 
       const onSubmit = async() => {
         try {
@@ -27,10 +29,11 @@ const LogIn = () => {
           setLoading(true)
           const res = await axios.post(`${process.env.REQUEST}auth/login`, form)
           if(!res.data.error) {
-            toast.success(res.data.message, {position: 'bottom-center'})
             setLoading(false)
+            toast.success(res.data.message, {position: 'bottom-right'})
+            setUser(res.data.data)
             localStorage.setItem('authToken', res.data.token);
-            reload()
+            return push('/')
           }
         } catch (error) {
           console.log(error)

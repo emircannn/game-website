@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import User from '../../public/icons/user.svg'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import OutsideClickHandler from 'react-outside-click-handler'
 import Link from 'next/link'
 import { AiOutlineLogout } from 'react-icons/ai'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/router'
+import { UserContext } from '@/context/userContext'
 
 const ProfilButton = ({
     user
@@ -14,6 +15,7 @@ const ProfilButton = ({
     const [open, setOpen] = useState(false)
 
     const {push} = useRouter()
+    const {setUser} = useContext(UserContext)
 
     const list = [
         {name: 'Profil', link: `/profil/${user?.username}`},
@@ -34,8 +36,9 @@ const ProfilButton = ({
 
     const handleLogout = async() => {
         localStorage.removeItem('authToken')
+        setUser(null)
         toast.success('Çıkış yapıldı.', {position: 'bottom-right'})
-        push('/')
+        return push('/')
     };   
 
   return (

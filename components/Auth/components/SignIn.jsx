@@ -6,9 +6,10 @@ import { animated, useSpring } from '@react-spring/web'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { setCookie } from 'cookies-next';
+import { UserContext } from '@/context/userContext'
 
 const SignUp = ({setLogin}) => {
 
@@ -17,9 +18,10 @@ const SignUp = ({setLogin}) => {
         to: { x: 0 },
       })
 
-      const {reload} = useRouter()
+      const {push} = useRouter()
 
       const [loading, setLoading] = useState(false)
+      const {setUser} = useContext(UserContext)
 
       const onSubmit = async() => {
         try {
@@ -34,8 +36,9 @@ const SignUp = ({setLogin}) => {
           if(!res.data.error) {
             toast.success(res.data.message, {position: 'bottom-center'})
             setLoading(false)
+            setUser(res.data.data)
             localStorage.setItem('authToken', res.data.token);
-            reload()
+            push('/')
           }
         } catch (error) {
           toast.error(error.response.data.message.split(':')[1], {position: 'bottom-center'})

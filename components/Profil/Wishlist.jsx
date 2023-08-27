@@ -12,12 +12,19 @@ const Wishlist = () => {
     const {reload} = useRouter()
 
     useEffect(() => {
-        const getWishlist = async () => {
-            const {data} = await axios.get(`${process.env.REQUEST}user/getWishlist?username=${user?.username}`)
-            setGame(data?.data)
+        if(user) {
+            const getWishlist = async () => {
+                const token = await localStorage.getItem('authToken')
+                const {data} = await axios.get(`${process.env.REQUEST}user/getWishlist?username=${user?.username}`,{
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                    })
+                setGame(data?.data)
+            }
+    
+            getWishlist()
         }
-
-        getWishlist()
     }, [user])
 
     const deleteWishlist = async (id) => {

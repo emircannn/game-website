@@ -24,6 +24,8 @@ export function UserContextProvider({ children }) {
             }
         } catch (error) {
             console.error('Kullanıcı bilgisi alınamadı:', error);
+            setUser(null);
+            return localStorage.removeItem('authToken');
         }
     };
     getUser();
