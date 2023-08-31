@@ -25,3 +25,16 @@ export const formatter = new Intl.NumberFormat('tr-TR', {
       reader.readAsDataURL(selectedFile);
     }
   };
+
+  export function seoDesc(desc) {
+    function etiketleriTemizle(desc) {
+        let div = document.createElement("div");
+        div.innerHTML = desc;
+        return div.textContent || div.innerText || "";
+    }
+  
+    const temizMetin = etiketleriTemizle(desc);
+    return temizMetin.slice(0, 157) + '...'
+  }
+
+

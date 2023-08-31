@@ -1,6 +1,8 @@
 import Image from "next/image"
 
-const Visual = () => {
+const Visual = ({
+  data
+}) => {
 
   return (
     <div>
@@ -12,29 +14,29 @@ const Visual = () => {
         title="video-player"
         width="100%"
         height="100%"
-        src="https://www.youtube.com/embed/o3V-GvvzjE4"
+        src={data.youtubeLink}
         allowFullScreen
       />
         </div>
 
         <div className="grid grid-cols-2 gap-[30px] my-[30px]">
           <div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300">
-            <Image alt="" src='/images/fifa1.jpg' width={3000} height={1500} priority className="object-cover w-full h-full"/>
+            <Image alt="" src={data.images[0]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
           </div>
 
           <div className="grid grid-cols-2 gap-[30px]">
-          <div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
-            <Image alt="" src='/images/fifa2.jpg' width={3000} height={1500} priority className="object-cover w-full h-full"/>
-          </div>
-          <div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
-            <Image alt="" src='/images/fifa3.jpg' width={3000} height={1500} priority className="object-cover w-full h-full"/>
-          </div>
-          <div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
-            <Image alt="" src='/images/fifa4.jpg' width={3000} height={1500} priority className="object-cover w-full h-full"/>
-          </div>
-          <div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
-            <Image alt="" src='/images/fifa5.gif' width={3000} height={1500} priority className="object-cover w-full h-full"/>
-          </div>
+          {data.images[1] &&<div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
+            <Image alt="" src={data.images[1]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
+          </div>}
+          {data.images[2] &&<div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
+            <Image alt="" src={data.images[2]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
+          </div>}
+          {data.images[3] &&<div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
+            <Image alt="" src={data.images[3]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
+          </div>}
+          {data.images[4] &&<div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
+            <Image alt="" src={data.images[4]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
+          </div>}
           </div>
         </div>
 

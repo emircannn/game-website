@@ -5,7 +5,7 @@ import Button from "@/components/UI & Layout/Form/Button"
 import { useState } from "react"
 
 
-const SetReview = ({width, height}) => {
+const SetReview = ({width, height, data}) => {
 
   const [show, setShow] = useState(false)
 
@@ -13,10 +13,12 @@ const SetReview = ({width, height}) => {
     <>
     <div className="mb-[30px] p-[30px] w-full rounded-xl bg-primary-lighter align-cntr flex-col">
         <div className="flex items-center justify-center">
-            <span className="text-[18px] font-semibold text-white mr-[12px] mb-[8px]">4,3</span>
-        <StyledRating/>
+            <span className="text-[18px] font-semibold text-white mr-[12px] mb-[8px]">{data?.rating}</span>
+            <StyledRating
+              value={data?.rating}
+            />
         </div>
-        <span className="text-secondary-light">168 Değerlendirme</span>
+        <span className="text-secondary-light">{data?.reviews.length} Değerlendirme</span>
 
         <Button
         title='Değerlendirme Bırak'

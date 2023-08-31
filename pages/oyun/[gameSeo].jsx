@@ -10,39 +10,76 @@ import Visual from "@/components/OyunSayfasi/Visual"
 import Footer from "@/components/UI & Layout/Footer"
 import GameWrapper from "@/components/UI & Layout/GameWrapper"
 import Header from "@/components/UI & Layout/Header"
+import Loading from "@/components/UI & Layout/Loading"
+import { seoDesc } from "@/utils/helper"
+import axios from "axios"
 import Head from "next/head"
-import { Fragment, useState } from "react"
+import { useRouter } from "next/router"
+import { Fragment, useEffect, useState } from "react"
+import { toast } from "react-hot-toast"
 
 const index = () => {
 
   const [showMore, setShowMore] = useState(false)
+  const {query} = useRouter()
+  const {gameSeo} = query
+  const [data,setData] = useState()
+  useEffect(() => {
+    if (gameSeo) {
+      const getData = async () => {
+        try {
+          const res = await axios.get(`${process.env.REQUEST}game/getBySeo?seo=${gameSeo}`)
+          setData(res?.data?.data)
+        } catch (error) {
+          toast.error(error?.response?.message?.split(':')[1] || error?.response?.message, {position: 'bottom-right'})
+        }
+      }
+      getData()
+    }
+  }, [gameSeo])
 
+  if(!data) {
+    return <Loading/>
+  }
   return (
     <Fragment>
       <Head>
-        <title>Fifa 23</title>
+        <title>{data?.name}</title>
+        <meta name="description" content={seoDesc(data?.desc)} />
       </Head>
     <Header/>
     <div className="max-768:hidden">
-      <Hero src={'/images/deneme.jpg'}/>
+      <Hero src={data?.bannerImage}/>
       <main className="container">
-      <Top/>
+
+      <Top
+        data={data}
+      />
 
       <AboutGame 
       setShowMore={setShowMore} 
+      data={data}
       marginTop={true}
       routeAbout='#about'
       routeReview='#review'/>
 
-      <Visual/>
+      <Visual
+        data={data}
+      />
+
       <Description 
       setShowMore={setShowMore} 
       showMore={showMore}
-      routeAbout='about'/>
+      routeAbout='about'
+      data={data}
+      />
 
-      <Configurations/>
+      <Configurations
+        data={data}
+      />
 
       <Reviews
+      data={data}
       routeReview='review'
       />
 
@@ -50,7 +87,14 @@ const index = () => {
       title='Benzer Oyunlar'
       showAll={false}
       continueBtn={true}
+      data={data?.similarGames}
       />
+
+      {data?.similarGames <= 0 &&
+      <p className="text-center text-white font-semibold text-[14px] pb-[20px]">
+        Henüz benzer oyun eklenmedi
+      </p>}
+
       </main>
     </div>
     <Responsive 

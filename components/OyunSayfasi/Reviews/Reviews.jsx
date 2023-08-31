@@ -3,11 +3,12 @@ import SetReview from './SetReview'
 import BestReviews from './components/BestReviews'
 import RecentReviews from './components/RecentReviews'
 
-const Reviews = ({routeReview}) => {
+const Reviews = ({routeReview, data}) => {
   return (
     <div id={routeReview} className='mt-[60px]'>
         <h4 className='heading my-[30px]' >Değerlendirmeler</h4>
         <SetReview
+        data={data}
         width='120'
         height='120'
         />

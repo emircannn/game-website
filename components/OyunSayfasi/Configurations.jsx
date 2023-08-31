@@ -1,22 +1,22 @@
 import Line from "../UI & Layout/Line"
 
-const Configurations = ({isResponsive, textSize}) => {
+const Configurations = ({isResponsive, textSize, data}) => {
 
     const minInfo = [
-        {title: 'İşletim Sistemi', data: 'Windows 10 64-bit'},
-        {title: 'İşlemci', data: 'Intel Core i5 6600k or AMD Ryzen 5 1600'},
-        {title: 'Bellek', data: '8 GB RAM'},
-        {title: 'Ekran Kartı', data: 'NVIDIA GeForce GTX 1660 or AMD Radeon RX 5600 XT'},
-        {title: 'Ağ', data: 'Genişbant İnternet bağlantısı'},
-        {title: 'Depolama', data: '100 GB kullanılabilir alan'},
+        {title: 'İşletim Sistemi', data: data?.minimumSystemRequirements?.operatingSystem},
+        {title: 'İşlemci', data: data?.minimumSystemRequirements?.processor},
+        {title: 'Bellek', data: data?.minimumSystemRequirements?.memory},
+        {title: 'Ekran Kartı', data: data?.minimumSystemRequirements?.graphicsCard},
+        {title: 'Ağ', data: data?.minimumSystemRequirements?.network},
+        {title: 'Depolama', data: data?.minimumSystemRequirements?.disk},
     ]
     const maxInfo = [
-        {title: 'İşletim Sistemi', data: 'Windows 10 64-bit'},
-        {title: 'İşlemci', data: 'Intel Core i7 6700 or AMD Ryzen 7 2700X'},
-        {title: 'Bellek', data: '12 GB RAM'},
-        {title: 'Ekran Kartı', data: 'NVIDIA GeForce GTX 1050 Ti or AMD Radeon RX 570'},
-        {title: 'Ağ', data: 'Genişbant İnternet bağlantısı'},
-        {title: 'Depolama', data: '100 GB kullanılabilir alan'},
+        {title: 'İşletim Sistemi', data: data?.recommendedSystemRequirements?.operatingSystem},
+        {title: 'İşlemci', data: data?.recommendedSystemRequirements?.processor},
+        {title: 'Bellek', data: data?.recommendedSystemRequirements?.memory},
+        {title: 'Ekran Kartı', data: data?.recommendedSystemRequirements?.graphicsCard},
+        {title: 'Ağ', data: data?.recommendedSystemRequirements?.network},
+        {title: 'Depolama', data: data?.recommendedSystemRequirements?.disk},
     ]
 
   return (

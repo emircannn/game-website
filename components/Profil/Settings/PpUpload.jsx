@@ -33,7 +33,8 @@ const PpUpload = ({
                 setLoading(false)
                 setPPImage(null)
                 setPPImagePre(null)
-                reload()
+                console.log(formData)/* 
+                reload() */
                 }
             } catch (error) {
                 console.log(error)

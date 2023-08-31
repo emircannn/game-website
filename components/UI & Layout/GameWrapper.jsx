@@ -5,7 +5,8 @@ const GameWrapper = ({
     continueBtn,
     showAll,
     title,
-    isResponsive,    
+    isResponsive, 
+    data   
 }) => {
     return (
       <div className='my-[20px] 768:my-[60px]'>
@@ -16,20 +17,21 @@ const GameWrapper = ({
           </div>
   
           <div className='mt-[30px] grid gap-[10px] 1140:gap-[30px] grid-cols-3 max-768:grid-cols-2'>
-              <Horizontal/>
-              <Horizontal/>
-              <Horizontal/>
-              <Horizontal/>
-              <Horizontal/>
-              <Horizontal/>
+              {data?.map((item,i) => (
+                <Horizontal
+                  key={i}
+                  data={item}
+                />
+              ))}
           </div>
 
-        {continueBtn === true &&    <div className="mt-[30px] align-cntr">
+        {data?.length > 6 && continueBtn === true ?   
+        <div className="mt-[30px] align-cntr">
                 <Button
                 title='Devamını Gör' 
                 textSize={`${ isResponsive ? "13px" : "14px"}`}
                 />
-            </div>}
+            </div>: null}
       </div>
     )
   }
