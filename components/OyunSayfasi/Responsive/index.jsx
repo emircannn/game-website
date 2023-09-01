@@ -9,35 +9,43 @@ import RecentReviews from "../Reviews/components/RecentReviews"
 import Button from "@/components/UI & Layout/Form/Button"
 import GameWrapper from "@/components/UI & Layout/GameWrapper"
 
-const Responsive = ({setShowMore, showMore}) => {
+const Responsive = ({setShowMore, showMore, data}) => {
   return (
     <div className="768:hidden ">
-        <Hero src={'/images/fifa.jpg'} height='h-[300px]'/>
+        <Hero src={data?.bannerImage} height='h-[300px]'/>
         <main className="mt-[230px] px-[15px] flex flex-col gap-[30px]">
-            <Info/>
+            <Info
+                data={data}
+            />
 
             <AboutGame
             textSize='[13px]'
             setShowMore={setShowMore}
+            data={data}
             routeAbout='#resAbout'
             routeReview='#resReview'
             />
 
-            <Visual/>
+            <Visual
+                data={data}
+            />
 
             <Description 
             setShowMore={setShowMore} 
             showMore={showMore}
+            data={data}
             routeAbout='resAbout'
             />
 
             <Configurations 
             isResponsive={true}
+            data={data}
             textSize='[13px]'/>
 
-            <div id='resReview' className='mt-[60px]'>
+            <div id='resReview'>
             <h4 className='heading my-[30px]' >Değerlendirmeler</h4>
             <SetReview 
+            data={data}
             width='80'
             height='80'
             />
@@ -61,6 +69,7 @@ const Responsive = ({setShowMore, showMore}) => {
                 showAll={false}
                 continueBtn={true}
                 isResponsive={true}
+                data={data.similarGames}
             />
         </main>
     </div>

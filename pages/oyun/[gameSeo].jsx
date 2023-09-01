@@ -99,7 +99,9 @@ const index = () => {
     </div>
     <Responsive 
     setShowMore={setShowMore} 
-    showMore={showMore}/>
+    showMore={showMore}
+    data={data}
+    />
     <Footer/>
     </Fragment>
   )

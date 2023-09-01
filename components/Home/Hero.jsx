@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const Hero = ({src, title, discount, price, height}) => {
   return (
-    <div className={`clip-polygon 1336:h-[550px] 450:h-[400px] ${height ? height : 'h-[300px]'} overflow-hidden w-full top-0 absolute`}>
+    <div className={`clip-polygon 1336:h-[550px] 768:h-[400px] 450:h-[300px] ${height ? height : 'h-[300px]'} overflow-hidden w-full top-0 absolute`}>
         <div className='w-full h-full relative'>
         <Image alt='' src={src} width={2500} height={1250} className='w-full h-full object-cover'/>
         <span className='absolute top-0 left-0 h-full w-full bg-black/30'></span>

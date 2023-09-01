@@ -16,7 +16,7 @@ const GameWrapper = ({
           {showAll === true && <button className='button'>Hepsini Gör</button>}
           </div>
   
-          <div className='mt-[30px] grid gap-[10px] 1140:gap-[30px] grid-cols-3 max-768:grid-cols-2'>
+          <div className='mt-[30px] grid-cols-1 grid gap-[10px] 1140:gap-[30px] 1140:grid-cols-3 768:grid-cols-2'>
               {data?.map((item,i) => (
                 <Horizontal
                   key={i}

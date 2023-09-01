@@ -2,13 +2,16 @@ import SetRating from "@/components/MaterialUI/SetRating";
 import Avatar from "@/components/UI & Layout/Avatar"
 import Button from "@/components/UI & Layout/Form/Button";
 import Textarea from "@/components/UI & Layout/Form/Textarea";
+import { UserContext } from "@/context/userContext";
 import tailwindConfig from "@/tailwind.config"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CgClose } from "react-icons/cg";
 
 const ReviewPopUp = ({setShow, width, height}) => {
     const [value, setValue] = useState(2);
     const [text, setText] = useState('');
+
+    const {user} = useContext(UserContext)
 
     const minLength = 60;
     const remainingChars = 0 + text.length;
@@ -32,6 +35,7 @@ const ReviewPopUp = ({setShow, width, height}) => {
                 height={height}
                 borderRadius="18"
                 backgroundColor={tailwindConfig.theme.extend.colors.primary}
+                src={user?.image}
                 />
 
                 <h4 className="heading">Yorumunuzu yazın</h4>

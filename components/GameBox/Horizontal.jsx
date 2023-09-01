@@ -13,10 +13,10 @@ const Horizontal = ({
 
   return (
     <div className='flex w-full gap-[10px] 450:gap-[15px] flex-col items-center'>
-        <div className=' w-full hover:scale-105 duration-300 cursor-pointer relative group overflow-hidden rounded-xl'>
+        <div className='w-full h-[210px] hover:scale-105 duration-300 cursor-pointer relative group overflow-hidden rounded-xl'>
         <Link href={`/oyun/${data?.seo}`}>
-            <Image alt='' src={data?.coverImage} width={1500} height={750} className='w-full h-full object-cover group-hover:opacity-0 duration-500'/>
-            <Image alt='' src={data?.bannerImage} width={1500} height={750} className='w-full h-full object-cover absolute opacity-0 group-hover:opacity-100 
+            <Image alt={data?.name} src={data?.coverImage} fill quality={100} className='w-full h-full object-cover group-hover:opacity-0 duration-500'/>
+            <Image alt={data?.name} src={data?.bannerImage} fill quality={100} className='w-full h-full object-cover absolute opacity-0 group-hover:opacity-100 
             top-0 left-0 right-0 bottom-0 duration-500'/>
 
             {data?.discountRate && <span className='absolute top-0 right-0 450:text-[12px] text-[10px] flex items-center justify-center font-semibold text-white bg-secondary px-[10px] py-[6px] discount-polygon'>

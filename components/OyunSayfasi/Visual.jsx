@@ -26,16 +26,16 @@ const Visual = ({
 
           <div className="grid grid-cols-2 gap-[30px]">
           {data.images[1] &&<div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
-            <Image alt="" src={data.images[1]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
+            <Image alt={data?.name} src={data.images[1]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
           </div>}
           {data.images[2] &&<div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
-            <Image alt="" src={data.images[2]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
+            <Image alt={data?.name} src={data.images[2]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
           </div>}
           {data.images[3] &&<div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
-            <Image alt="" src={data.images[3]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
+            <Image alt={data?.name} src={data.images[3]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
           </div>}
           {data.images[4] &&<div className="rounded-xl overflow-hidden w-full border-2 border-transparent hover:border-secondary duration-300 cursor-pointer">
-            <Image alt="" src={data.images[4]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
+            <Image alt={data?.name} src={data.images[4]} width={3000} height={1500} priority className="object-cover w-full h-full"/>
           </div>}
           </div>
         </div>
