@@ -14,7 +14,7 @@ const AboutGame = ({
 
     const htmlString = data?.desc
   return (
-    <div className={`${ marginTop && "mt-[580px] max-768:mt-[760px] max-450:mt-[600px]"} gap-x-[60px] gap-y-[20px] grid max-768:grid-cols-1 grid-cols-2`}>
+    <div className={`${ marginTop && "mt-[640px] max-768:mt-[760px] max-450:mt-[600px]"} gap-x-[60px] gap-y-[20px] grid max-768:grid-cols-1 grid-cols-2`}>
         <div className="text-white">
             <div className=" text-white/75 font-medium text-[13px] leading-6 tracking-wider line-clamp-5" 
             dangerouslySetInnerHTML={{ __html: htmlString }} />

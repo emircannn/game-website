@@ -11,7 +11,9 @@ const TopRight = ({
     data
 }) => {
     const discountDateDB = data?.discountDate ? data?.discountDate : null;
+    const preOrderDate = data?.preOrderDate ? data?.preOrderDate : null;
     const [remainingDate, setRemainingDate] = useState(calculateRemainingTime(discountDateDB));
+    const [preOrder, setPreOrder] = useState(calculateRemainingTime(preOrderDate));
     useEffect(() => {
     if(discountDateDB) {
         const timerInterval = setInterval(() => {
@@ -24,6 +26,18 @@ const TopRight = ({
             };
     }
     }, [discountDateDB]);
+    useEffect(() => {
+    if(preOrderDate) {
+        const timerInterval = setInterval(() => {
+            const newRemainingDate = calculateRemainingTime(preOrderDate);
+            setPreOrder(newRemainingDate);
+            }, 1000);
+        
+            return () => {
+                clearInterval(timerInterval);
+            };
+    }
+    }, [preOrderDate]);
 
   return (
     <div className="p-[20px] glass-light 768:rounded-xl flex-col gap-[25px] relative flex items-center justify-between">
@@ -61,6 +75,10 @@ const TopRight = ({
                 {data?.discountDate && (new Date(data?.discountDate) > new Date()) ?
                 <span className="font-semibold text-[13px] text-white text-center">
                     İndirim Süresi: {remainingDate}
+                </span> : null}
+                {data?.preOrderDate && (new Date(data?.preOrderDate) > new Date()) ?
+                <span className="font-semibold text-[13px] text-white text-center">
+                    Yayına kalan süre: {preOrder}
                 </span> : null}
 
                 <div className="flex justify-center items-center gap-[15px]">

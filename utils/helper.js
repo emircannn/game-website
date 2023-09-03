@@ -76,10 +76,10 @@ export const formatter = new Intl.NumberFormat('tr-TR', {
     }
   
     if (remainingMinutes > 0) {
-      remainingTime += `${remainingMinutes} dakika `;
+      remainingTime += `${remainingMinutes} dk `;
     }
   
-    remainingTime += `${remainingSeconds} saniye `;
+    remainingTime += `${remainingSeconds} s `;
     
     return remainingTime.trim();
   }

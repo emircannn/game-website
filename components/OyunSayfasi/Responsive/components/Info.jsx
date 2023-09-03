@@ -26,6 +26,22 @@ const Info = ({
             };
     }
     }, [discountDateDB]);
+
+    const preOrderDate = data?.preOrderDate ? data?.preOrderDate : null;
+    const [preOrder, setPreOrder] = useState(calculateRemainingTime(preOrderDate));
+    useEffect(() => {
+    if(preOrderDate) {
+        const timerInterval = setInterval(() => {
+            const newRemainingDate = calculateRemainingTime(preOrderDate);
+            setPreOrder(newRemainingDate);
+            }, 1000);
+        
+            return () => {
+                clearInterval(timerInterval);
+            };
+    }
+    }, [preOrderDate]);
+    
   return (
     <div className="flex flex-col gap-[20px]">
         <div className="flex items-center justify-between">
@@ -64,6 +80,10 @@ const Info = ({
             {data?.discountDate && (new Date(data?.discountDate) > new Date()) ?
                 <span className="font-semibold text-[13px] text-white text-center">
                     İndirim Süresi: {remainingDate}
+                </span> : null}
+                {data?.preOrderDate && (new Date(data?.preOrderDate) > new Date()) ?
+                <span className="font-semibold text-[13px] text-white text-center">
+                    Yayına kalan süre: {preOrder}
                 </span> : null}
 
         <div className="flex items-center gap-[10px]">

@@ -3,8 +3,8 @@ import {FiUsers} from 'react-icons/fi'
 
 const Trust = () => {
   return (
-    <div className='h-[150px] 768:py-[40px] bg-gradient-to-l from-graident to-secondary-light'>
-        <div className='container max-768:min-w-full mx-auto max-768:px-[5px] grid gap-[10px] grid-cols-3 h-full'>
+    <div className='768:py-[40px] bg-gradient-to-l from-graident to-secondary-light'>
+        <div className='container max-768:min-w-full mx-auto max-768:px-[5px] max-450:flex flex-col 450:grid gap-[10px] grid-cols-3 h-full '>
             <div className='flex items-center justify-center max-768:flex-col leading-tight max-768:justify-start max-768:py-[15px] w-full h-full max-768:gap-[5px] max-768:text-center'>
                 <div className='text-white text-[20px] 768:text-[40px]'><FiUsers/></div>
                 <div className='768:ml-[15px]'>

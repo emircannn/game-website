@@ -10,8 +10,9 @@ import Weekly from '@/components/Home/Weekly'
 import Footer from '@/components/UI & Layout/Footer'
 import FeedBack from '@/components/Degerlendirme/FeedBack'
 import GameWrapper from '@/components/UI & Layout/GameWrapper'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '@/context/userContext'
+import { getGames } from '@/utils/Requests'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -26,7 +27,12 @@ export default function Home() {
         setUser(null)
     }
   }, [setUser])
+
+  const [gameData, setGameData] = useState()
   
+  useEffect(() => {
+    getGames(setGameData)
+  }, [])
 
   return (
     <>
@@ -42,7 +48,10 @@ export default function Home() {
           <main>
           <section className='container 1336:mt-[460px] 450:mt-[320px] mt-[230px]'>
             <GameWrapper
-            title={'Trendler'}
+            title={'Tüm Oyunlar'}
+            showAll
+            href='/ara'
+            data={gameData}
             />
           </section>
 

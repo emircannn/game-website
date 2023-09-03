@@ -1,8 +1,8 @@
 export const platformOptions = [
-    {label: 'Steam', value: 'steam'},
-    {label: 'EA', value: 'ea'},
-    {label: 'Ubisoft', value: 'ubisoft'},
-    {label: 'Epic Games', value: 'eg'},
+    {label: 'Steam', value: 'Steam'},
+    {label: 'EA', value: 'EA'},
+    {label: 'Ubisoft', value: 'Ubisoft'},
+    {label: 'Epic Games', value: 'Epic Games'},
 ]
 export const categoriesOptions = [
     {label: 'Strateji', value: '1'},
@@ -14,11 +14,11 @@ export const categoriesOptions = [
     {label: 'Çok Oyunculu', value: '7'},
 ]
 export const sortOptions = [
-    {label: 'Artan Fiyat', value: 'price'},
-    {label: 'Azalan Fiyat', value: 'priceasc'},
-    {label: 'Yükek İndirim', value: 'discounted'},
+    {label: 'Artan Fiyat', value: 'priceasc'},
+    {label: 'Azalan Fiyat', value: 'price'},
     {label: 'Yeni', value: 'new'},
     {label: 'Eski', value: 'old'},
+    {label: 'Yükek İndirim', value: 'discount'},
     {label: 'Yüksek Değerlendirme', value: 'reviews'},
 ]
 export const stockOptions = [

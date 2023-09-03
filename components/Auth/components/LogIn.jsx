@@ -36,9 +36,7 @@ const LogIn = () => {
             return push('/')
           }
         } catch (error) {
-          console.log(error)
           toast.error(error?.response?.data?.message.split(':')[1], {position: 'bottom-center'})
-          console.log(error)
           setLoading(false)
         }
       };

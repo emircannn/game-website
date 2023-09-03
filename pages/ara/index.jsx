@@ -5,8 +5,11 @@ import Header from '@/components/UI & Layout/Header'
 import StyledSelect from '@/components/UI & Layout/StyledSelect'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import { categoriesOptions, platformOptions, sortOptions, stockOptions } from '../../components/filter'
+import { platformOptions, sortOptions, stockOptions } from '../../components/filter'
 import { useRouter } from 'next/router'
+import { getCategory, getGames } from '@/utils/Requests'
+import Pagination from '@/components/UI & Layout/Pagination'
+import Button from '@/components/UI & Layout/Form/Button'
 
 const SearchPage = () => {
     const {query, push} = useRouter()
@@ -14,9 +17,14 @@ const SearchPage = () => {
     const [platformFilter, setPlatformFilter] = useState(query.platform)
     const [categoryFilter, setCategoryFilter] = useState(query.category)
     const [sortFilter, setSortFilter] = useState(query.sort)
-    const [stockFilter, setStockFilter] = useState(query.stock)
+    const [stokFilter, setStokFilter] = useState(query.stok)
     const [minPrice, setMinPrice] = useState(query.min_price)
     const [maxPrice, setMaxPrice] = useState(query.max_price)
+
+    const [categories, setCategories] = useState()
+    const [games, setGames] = useState()
+    const [totalPages, setTotalPages] = useState()
+    const [page, setPage] = useState(1)
    
     useEffect(() => {
         const updateURLQueryParams = () => {
@@ -30,19 +38,19 @@ const SearchPage = () => {
             if (platformFilter) {
               queryParams.push(`platform=${platformFilter}`);
             }
-            if (stockFilter) {
-              queryParams.push(`stock=${stockFilter}`);
+            if (stokFilter) {
+              queryParams.push(`stok=${stokFilter}`);
             }
             if (minPrice) {
-              queryParams.push(`min_price=${minPrice}`);
+              queryParams.push(`minPrice=${minPrice}`);
             }
             if (maxPrice) {
-              queryParams.push(`max_price=${maxPrice}`);
+              queryParams.push(`maxPrice=${maxPrice}`);
             }
         
             const newURL = `${window.location.pathname}?${queryParams.join('&')}`;
             
-            if (categoryFilter || maxPrice || minPrice || platformFilter || sortFilter || stockFilter) {
+            if (categoryFilter || maxPrice || minPrice || platformFilter || sortFilter || stokFilter) {
                 window.history.replaceState({}, '', newURL);
                 push(newURL)
             }
@@ -50,7 +58,7 @@ const SearchPage = () => {
 
           updateURLQueryParams()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [categoryFilter, maxPrice, minPrice, platformFilter, sortFilter, stockFilter])
+    }, [categoryFilter, maxPrice, minPrice, platformFilter, sortFilter, stokFilter])
 
     const clearFilter = () => {
         const newURL = `${window.location.pathname}?`;
@@ -58,9 +66,25 @@ const SearchPage = () => {
         setPlatformFilter()
         setSortFilter()
         setCategoryFilter()
-        setStockFilter()
-        setSearchInput()
+        setStokFilter()
+        setMaxPrice()
+        setMinPrice()
     }
+
+    useEffect(() => {
+      getCategory(setCategories)
+    }, [])
+    
+    const categoriesOptions =
+      categories?.map((category) => (
+        {label: category?.name, value: category?.seo}
+      ))
+
+      useEffect(() => {
+        getGames(setGames,setTotalPages,page, query.sort, query.category,query.platform,query.stok,query.minPrice,query.maxPrice,query.preOrder)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [query, page])
+
 
   return (
     <>
@@ -74,7 +98,7 @@ const SearchPage = () => {
         <div className='flex flex-col items-center gap-[15px] w-full'>
             <div className='grid-cols-2 grid 768:grid-cols-4 gap-[15px] 768:gap-[30px] w-full'>
             <StyledSelect
-                dropdownHeight='150px'
+                dropdownHeight='162px'
                 width='100%'
                 options={platformOptions}
                 setValue={setPlatformFilter}
@@ -82,7 +106,7 @@ const SearchPage = () => {
                 placeholder='Platform'
             />
             <StyledSelect
-                dropdownHeight='250px'
+                dropdownHeight='162px'
                 width='100%'
                 options={categoriesOptions}
                 setValue={setCategoryFilter}
@@ -90,7 +114,7 @@ const SearchPage = () => {
                 placeholder='Kategori'
             />
             <StyledSelect
-                dropdownHeight='200px'
+                dropdownHeight='162px'
                 width='100%'
                 options={sortOptions}
                 setValue={setSortFilter}
@@ -101,14 +125,14 @@ const SearchPage = () => {
                 dropdownHeight='90px'
                 width='100%'
                 options={stockOptions}
-                setValue={setStockFilter}
+                setValue={setStokFilter}
                 value={query.stock}
                 placeholder='Stok Durumu'
             />
             </div>
 
-            <div className='flex items-center justify-center gap-[10px] 768:gap-[20px]'>
-                <span className='text-[14px] text-white font-medium'>
+            <div className='flex items-center justify-center gap-[10px] 768:gap-[20px] flex-wrap'>
+                <span className='text-[12px] 768:text-[14px] text-white font-medium'>
                     Fiyat Aralığı
                 </span>
 
@@ -133,17 +157,24 @@ const SearchPage = () => {
                 ₺
                 </span>
 
+                <Button
+                  mt='0'
+                  height='h-[40px]'
+                  title='Filtreyi Temizle'
+                  onClick={() => clearFilter()}
+                />
+
             </div>
-                <button
-                onClick={() => clearFilter()}
-                className='text-secondary underline ml-[15px] duration-300 hover:text-white flex'
-                >
-                Filtreyi Temizle
-                </button>
         </div>
 
         <GameWrapper
-            />
+        search
+        data={games}
+        />
+
+      <div className='flex justify-center'>
+          {totalPages > 1 && <Pagination siblingCount={5} totalPages={totalPages} onPageChange={setPage}/>}
+      </div>
 
         </main>
         <Footer/>

@@ -32,12 +32,10 @@ const PpUpload = ({
                 toast.success(res.data.message, {position: 'bottom-right'})
                 setLoading(false)
                 setPPImage(null)
-                setPPImagePre(null)
-                console.log(formData)/* 
+                setPPImagePre(null)/* 
                 reload() */
                 }
             } catch (error) {
-                console.log(error)
                 toast.error(error?.response?.data?.message.split(':')[1], {position: 'bottom-right'})
                 setLoading(false)
             }

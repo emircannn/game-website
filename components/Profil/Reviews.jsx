@@ -26,7 +26,6 @@ const Reviews = () => {
                   })
                   setData(res?.data?.data)
           } catch (error) {
-              console.log(error)
               toast.error(error?.response?.data?.message.split(':')[1], {position: 'bottom-right'})
           }
       }
