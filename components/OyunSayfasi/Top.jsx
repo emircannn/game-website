@@ -4,7 +4,7 @@ import TopRight from "./TopRight"
 
 
 const Top = ({
-  data
+  data,
 }) => {
   return (
     <div className="768:top-[270px] max-768:left-0 max-768:top-[120px] max-450:top-[90px] absolute grid grid-cols-1 768:grid-cols-2 768:gap-x-[30px] 1140:gap-x-[60px]

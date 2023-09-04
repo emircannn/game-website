@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {AiOutlineSearch} from 'react-icons/ai'
 import {CgClose} from 'react-icons/cg'
 import SearchCont from './SearchCont'
@@ -9,12 +9,20 @@ import Logo from './Logo'
 import Link from 'next/link'
 import { UserContext } from '@/context/userContext'
 import ProfilButton from './ProfilButton'
+import { getCartCount } from '@/utils/Requests'
 
 
 const Header = () => {
     const [search, setSearch] = useState(false)
+    const [cartCount, setCartCount] = useState(0)
     const {push} = useRouter()
     const {user} = useContext(UserContext)
+    const [searchInput, setSearchInput] = useState('')
+
+    useEffect(() => {
+        getCartCount(user?._id, setCartCount)
+    }, [user])
+    
 
   return (
     <header className='w-full flex bg-transparent gap-[8px] items-center justify-between py-[20px] max-768:px-[10px] 768:px-[50px]'>
@@ -22,9 +30,9 @@ const Header = () => {
 
             <nav className={`flex items-center z-50 glass ${search ? 'max-768:w-[200px] max-1140:w-[300px] !sticky top-[30px]' : 'relative'} overflow-hidden justify-between 768:p-[8px] rounded-full gap-[20px]`}>
                 <ul className='flex items-center max-1140:hidden text-white text-[16px] gap-[20px] pl-[12px]'>
-                    <li className='cursor-pointer duration-300 hover:text-secondary'>Trendler</li>
-                    <li className='cursor-pointer duration-300 hover:text-secondary'>Ön Sipariş</li>
-                    <li className='cursor-pointer duration-300 hover:text-secondary'>Kategortiler</li>
+                    <li className='cursor-pointer duration-300 hover:text-secondary'><Link href='/haftalik_firsatlar'>Haftalık Fırsatlar</Link></li>
+                    <li className='cursor-pointer duration-300 hover:text-secondary'><Link href='/ara?preOrder=true'>Ön Sipariş</Link></li>
+                    <li className='cursor-pointer duration-300 hover:text-secondary'><Link href='/kategoriler'>Kategortiler</Link></li>
                     <li className='cursor-pointer duration-300 hover:text-secondary'>S.S.S.</li>
                 </ul>
 
@@ -39,8 +47,12 @@ const Header = () => {
                 w-full h-full flex items-center justify-between`}>
                     <div className='flex items-center w-full gap-[8px]'>
                     <AiOutlineSearch size={24} className='ml-[12px]'/>
-                    <input type="text" className='bg-transparent outline-none border-none h-full text-primary w-full placeholder:text-primary-light/75 font-bold text-[14px]'
-                     placeholder='Oyun Ara...' />
+                    <input 
+                    type="text" 
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    value={searchInput}
+                    className='bg-transparent outline-none border-none h-full text-primary w-full placeholder:text-primary-light/75 font-bold text-[14px]'
+                    placeholder='Oyun Ara...' />
                     </div>
 
                     <button onClick={() => setSearch(false)} className='flex items-center justify-center text-primary group h-[36px] rounded-full min-w-[36px]'>
@@ -49,12 +61,22 @@ const Header = () => {
                 </div>
             </nav>
 
-            {search && <SearchCont/>}
+            {search && 
+            <SearchCont
+                searchInput={searchInput}
+            />}
 
         <div className='flex items-center z-10 768:gap-[18px] text-white gap-[10px]'>
         <Link href='/sepet'>
-        <button className='768:p-[12px] p-[6px] hover:bg-secondary duration-300 rounded-xl'>
+
+        <button className='768:p-[12px] p-[6px] hover:bg-secondary duration-300 rounded-xl relative'>
         <Cart width='22' height='22' fill='#fff'/>
+
+        {cartCount && cartCount > 0 ? 
+        <span className='absolute top-0 right-0 rounded-full w-[18px] h-[18px] bg-graident flex items-center justify-center text-[11px] font-semibold'>
+            {cartCount}
+        </span>
+        : null}
         </button>
         </Link>
 

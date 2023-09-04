@@ -1,5 +1,5 @@
 import Platform from "@/components/UI & Layout/Platform"
-import { AiOutlineHeart } from "react-icons/ai"
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"
 import { FiShare2 } from "react-icons/fi"
 import Tick from '../../../../public/icons/tick.svg'
 import Cart from '../../../../public/icons/basket.svg'
@@ -7,11 +7,15 @@ import tailwindConfig from "@/tailwind.config"
 import Button from "@/components/UI & Layout/Form/Button"
 import { IoMdClose } from "react-icons/io"
 import { calculateRemainingTime, formatter } from "@/utils/helper"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { addToCart, addToWishlist, deleteToWishlist } from "@/utils/Requests"
+import { UserContext } from "@/context/userContext"
+import { toast } from "react-hot-toast"
 
 const Info = ({
     data
 }) => {
+    const {user} = useContext(UserContext)
     const discountDateDB = data?.discountDate ? data?.discountDate : null;
     const [remainingDate, setRemainingDate] = useState(calculateRemainingTime(discountDateDB));
     useEffect(() => {
@@ -47,7 +51,23 @@ const Info = ({
         <div className="flex items-center justify-between">
             <h1 className="text-[14px] font-semibold text-white tracking-wide">{data?.name}</h1>
             <div className="flex items-center gap-[8px] text-[24px] text-graident">
-                <AiOutlineHeart className="hover:text-secondary duration-300"/>
+            {!user?.wishlist.includes(data?._id) ?
+                <button 
+                onClick={() => addToWishlist(user?._id, data?._id)}
+                className=" text-rose-500 hover:text-secondary duration-300 cursor-pointer">
+                <AiFillHeart/>
+                </button> :
+                <button 
+                onClick={() => deleteToWishlist(user?._id, data?._id)}
+                className=" text-rose-500 hover:text-secondary duration-300 cursor-pointer">
+                <AiOutlineHeart/>
+                </button>}
+                {!user &&
+                    <button 
+                onClick={() => toast.error('İstek listenize ekleyebilmek için oturum açın.', {position: 'bottom-right'})}
+                className=" text-rose-500 hover:text-secondary duration-300 cursor-pointer">
+                <AiFillHeart/>
+                </button> }
                 <FiShare2 className="hover:text-secondary duration-300"/>
             </div>
         </div>
@@ -88,12 +108,11 @@ const Info = ({
 
         <div className="flex items-center gap-[10px]">
             <Button
-            iconLeft={<Cart fill='#fff' width='20' height='20'/>}
-            />
-            <Button
+            onClick={() => addToCart(user?._id, data?._id)}
             textSize="14px"
-            title='Satın Al'
+            title='Sepete Ekle'
             wfull={true}
+            iconLeft={<Cart fill='#fff' width='20' height='20'/>}
             />
         </div>
     </div>

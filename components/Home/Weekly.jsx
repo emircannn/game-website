@@ -3,6 +3,7 @@ import WeeklyBox from '../GameBox/WeeklyBox'
 import { toast } from 'react-hot-toast'
 import GameSkeleton from '../MaterialUI/GameSkeleton'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 const Weekly = () => {
 
@@ -32,7 +33,10 @@ const Weekly = () => {
         <div className='w-full flex items-center justify-between'>
         <h2 className='heading'>Haftalık Fırsatlar</h2>
 
-        {totalPages > 1 && <button className='button'>Hepsini Gör</button>}
+        {totalPages > 1 && 
+        <Link href='/haftalik_firsatlar'>
+          <button className='button'>Hepsini Gör</button>
+        </Link>}
         </div>
 
         <div className='mt-[30px] grid gap-[10px] 1140:gap-[30px] grid-cols-3 max-768:grid-cols-2 relative'>

@@ -70,6 +70,7 @@ const Responsive = ({setShowMore, showMore, data}) => {
                 continueBtn={true}
                 isResponsive={true}
                 data={data.similarGames}
+                search
             />
         </main>
     </div>

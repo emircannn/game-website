@@ -32,7 +32,7 @@ const GameWrapper = ({
                   data={item}
                 />
               )) :
-             search && <div className="text-[16px] font-semibold text-white absolute top-0 left-0 w-full h-full flex items-center justify-center">
+             search && <div className="text-[16px] font-semibold text-white absolute top-4 left-0 w-full h-full flex items-center justify-center">
               Oyun bulunamadı...
              </div>
               : 

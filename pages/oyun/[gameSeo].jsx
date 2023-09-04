@@ -11,6 +11,7 @@ import Footer from "@/components/UI & Layout/Footer"
 import GameWrapper from "@/components/UI & Layout/GameWrapper"
 import Header from "@/components/UI & Layout/Header"
 import Loading from "@/components/UI & Layout/Loading"
+import { getGameBySeo } from "@/utils/Requests"
 import { seoDesc } from "@/utils/helper"
 import axios from "axios"
 import Head from "next/head"
@@ -26,15 +27,7 @@ const index = () => {
   const [data,setData] = useState()
   useEffect(() => {
     if (gameSeo) {
-      const getData = async () => {
-        try {
-          const res = await axios.get(`${process.env.REQUEST}game/getBySeo?seo=${gameSeo}`)
-          setData(res?.data?.data)
-        } catch (error) {
-          toast.error(error?.response?.message?.split(':')[1] || error?.response?.message, {position: 'bottom-right'})
-        }
-      }
-      getData()
+      getGameBySeo(setData, gameSeo)
     }
   }, [gameSeo])
 
@@ -85,15 +78,16 @@ const index = () => {
 
       <GameWrapper
       title='Benzer Oyunlar'
+      search
       showAll={false}
       continueBtn={true}
       data={data?.similarGames}
       />
 
-      {data?.similarGames <= 0 &&
+      {/* {data?.similarGames <= 0 &&
       <p className="text-center text-white font-semibold text-[14px] pb-[20px]">
         Henüz benzer oyun eklenmedi
-      </p>}
+      </p>} */}
 
       </main>
     </div>

@@ -2,14 +2,18 @@ import Tick from '../../public/icons/tick.svg'
 import Tag from '../../public/icons/tag.svg'
 import Cart from '../../public/icons/basket.svg'
 import tailwindConfig from "@/tailwind.config"
-import { AiFillHeart } from "react-icons/ai"
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"
 import { calculateRemainingTime, formatter } from '@/utils/helper'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
+import { UserContext } from '@/context/userContext'
+import { addToCart, addToWishlist, deleteToWishlist } from '@/utils/Requests'
+import { toast } from 'react-hot-toast'
 
 const TopRight = ({
-    data
+    data,
 }) => {
+    const {user} = useContext(UserContext)
     const discountDateDB = data?.discountDate ? data?.discountDate : null;
     const preOrderDate = data?.preOrderDate ? data?.preOrderDate : null;
     const [remainingDate, setRemainingDate] = useState(calculateRemainingTime(discountDateDB));
@@ -38,6 +42,7 @@ const TopRight = ({
             };
     }
     }, [preOrderDate]);
+
 
   return (
     <div className="p-[20px] glass-light 768:rounded-xl flex-col gap-[25px] relative flex items-center justify-between">
@@ -82,18 +87,32 @@ const TopRight = ({
                 </span> : null}
 
                 <div className="flex justify-center items-center gap-[15px]">
-                    <button className="h-[55px] min-w-[55px] bg-rose-500 rounded-lg align-cntr hover:bg-secondary duration-300">
+                    <button 
+                    onClick={() => addToCart(user?._id, data?._id)}
+                    className="h-[55px] w-full bg-rose-500 text-white font-semibold rounded-lg align-cntr hover:bg-secondary duration-300 gap-[10px]">
                         <Cart fill='#fff' width='25' height='25'/>
-                    </button>
-                    <button className="h-[55px] w-full bg-rose-500 text-white font-semibold rounded-lg align-cntr hover:bg-secondary duration-300">
-                        Satın Al
+                        Sepete Ekle
                     </button>
                 </div>
                 </div>
 
-                <div className="absolute top-4 right-4 text-rose-500 hover:text-secondary duration-300 cursor-pointer">
+                {!user?.wishlist.includes(data?._id) ?
+                <button 
+                onClick={() => addToWishlist(user?._id, data?._id)}
+                className="absolute top-4 right-4 text-rose-500 hover:text-secondary duration-300 cursor-pointer">
                 <AiFillHeart size={30}/>
-                </div>
+                </button> :
+                <button 
+                onClick={() => deleteToWishlist(user?._id, data?._id)}
+                className="absolute top-4 right-4 text-rose-500 hover:text-secondary duration-300 cursor-pointer">
+                <AiOutlineHeart size={30}/>
+                </button>}
+                {!user &&
+                    <button 
+                onClick={() => toast.error('İstek listenize ekleyebilmek için oturum açın.',{position: 'bottom-right'})}
+                className="absolute top-4 right-4 text-rose-500 hover:text-secondary duration-300 cursor-pointer">
+                <AiFillHeart size={30}/>
+                </button> }
         </div>
   )
 }

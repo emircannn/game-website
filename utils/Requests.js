@@ -13,9 +13,7 @@ export const getCategory = async (setData) => {
 
 export const getGames = async (setGameData,setTotalPages, page, sort, category, platform, stok, minPrice, maxPrice,preOrder) => {
     try {
-        let queryParams = ''; // Boş bir sorgu parametreleri dizesi oluşturun
-
-        // Sadece tanımlı parametreleri sorgu parametrelerine ekleyin
+        let queryParams = ''; 
         if (page) queryParams += `page=${page}`;
         if (sort) queryParams += `${queryParams ? '&' : ''}sort=${sort}`;
         if (category) queryParams += `${queryParams ? '&' : ''}category=${category}`;
@@ -32,19 +30,135 @@ export const getGames = async (setGameData,setTotalPages, page, sort, category, 
     }
   }
 
-export const getDiscountedGames = async (setData, setTotalPages, page) => {
+  export const getGameBySeo = async (setData, gameSeo) => {
     try {
-        const token = sessionStorage.getItem('adminToken');
-        let queryParams = '';
-        if (page) queryParams += `?page=${page}`;
-        const res = await axios.get(`${process.env.REQUEST}admin/discountedGames${queryParams}`, {
+      const res = await axios.get(`${process.env.REQUEST}game/getBySeo?seo=${gameSeo}`)
+      setData(res?.data?.data)
+    } catch (error) {
+      toast.error(error?.response?.message?.split(':')[1] || error?.response?.message, {position: 'bottom-right'})
+    }
+  }
+
+  export const addToWishlist = async(id, wishlist) => {
+    try {
+        const token = localStorage.getItem('authToken');
+        const res = await axios.post(`${process.env.REQUEST}user/addWishlist?id=${id}`, {wishlist}, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
+        toast.success(res.data?.message, {position: 'bottom-right'})
+         window.location.reload()
+    } catch (error) {
+        toast.error(error?.response?.data?.message.split(':')[1] || error?.response?.data?.message, {position: 'bottom-right'})
+    }
+  }
+  export const deleteToWishlist = async(id, wishlist) => {
+    try {
+        const token = localStorage.getItem('authToken');
+        const res = await axios.post(`${process.env.REQUEST}user/deleteWishlist?id=${id}`, {wishlist}, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
+        toast.success(res.data?.message, {position: 'bottom-right'})
+        window.location.reload()
+    } catch (error) {
+        toast.error(error?.response?.data?.message.split(':')[1] || error?.response?.data?.message, {position: 'bottom-right'})
+    }
+  }
+
+  export const getCart = async(id, setData) => {
+    try {
+        if(id) {
+            const token = localStorage.getItem('authToken');
+        const res = await axios.get(`${process.env.REQUEST}cart/getUserCart?id=${id}`, {
             headers: {
                 Authorization: 'Bearer ' + token
             }
         })
         setData(res?.data?.data)
-        setTotalPages(res?.data?.totalPages)
+        }
+        else {
+            return setData(null)
+        }
     } catch (error) {
         toast.error(error?.response?.data?.message?.split(':')[1] || error?.response?.data?.message, {position: 'bottom-right'})
     }
   }
+  export const getCartCount = async(id, setData) => {
+    try {
+        if(id) {
+            const token = localStorage.getItem('authToken');
+        const res = await axios.get(`${process.env.REQUEST}cart/cartCount?id=${id}`, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
+        setData(res?.data?.data)
+        }
+        else {
+            return setData(null)
+        }
+    } catch (error) {
+        toast.error(error?.response?.data?.message?.split(':')[1] || error?.response?.data?.message, {position: 'bottom-right'})
+    }
+  }
+
+  export const addToCart = async(user, game) => {
+    try {
+        if(user) {
+        const token = localStorage.getItem('authToken');
+        const res = await axios.post(`${process.env.REQUEST}cart/add`,{user, game}, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
+        toast.success(res?.data?.message, {position: 'bottom-right'})
+        window.location.reload()
+        }
+        else {
+            toast.error('Oturum açın', {position: 'bottom-right'})
+        }
+    } catch (error) {
+        toast.error(error?.response?.data?.message.split(':')[1] || error?.response?.data?.message, {position: 'bottom-right'})
+    }
+  }
+  export const deleteToCart = async(user, game) => {
+    try {
+        if(user) {
+        const token = localStorage.getItem('authToken');
+        const res = await axios.post(`${process.env.REQUEST}cart/delete`,{user, game}, {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        })
+        toast.success(res?.data?.message, {position: 'bottom-right'})
+        window.location.reload()
+        }
+        else {
+            toast.error('Oturum açın', {position: 'bottom-right'})
+        }
+    } catch (error) {
+        toast.error(error?.response?.data?.message.split(':')[1] || error?.response?.data?.message, {position: 'bottom-right'})
+    }
+  }
+
+  export const getWishlist = async (setGame, user) => {
+    try {
+        if(user) {
+            const token = localStorage.getItem('authToken')
+        const {data} = await axios.get(`${process.env.REQUEST}user/getWishlist?username=${user?.username}`,{
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+        })
+        setGame(data?.data?.wishlist)
+        }
+        else {
+            setGame(null)
+        }
+    } catch (error) {
+        toast.error(error?.response?.data?.message.split(':')[1] || error?.response?.data?.message, {position: 'bottom-right'})
+    }
+}

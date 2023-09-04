@@ -13,6 +13,9 @@ import GameWrapper from '@/components/UI & Layout/GameWrapper'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '@/context/userContext'
 import { getGames } from '@/utils/Requests'
+import { toast } from 'react-hot-toast'
+import axios from 'axios'
+import { formatter } from '@/utils/helper'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,6 +23,8 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
 
   const {setUser} = useContext(UserContext)
+  const [firstBanner, setFirstBanner] = useState()
+  const [secondBanner, setSecondBanner] = useState()
 
   useEffect(() => {
     const token = localStorage.getItem('authToken')
@@ -34,6 +39,29 @@ export default function Home() {
     getGames(setGameData)
   }, [])
 
+  useEffect(() => {
+    const getData = async () => {
+        try {
+          const res = await axios.get(`${process.env.REQUEST}admin/getFirstBanner`)
+          setFirstBanner(res?.data?.data?.firstBanner)
+        } catch (error) {
+          toast.error(error?.response?.message?.split(':')[1] || error?.response?.message, {position: 'bottom-right'})
+        }
+    }
+    getData()
+  }, [])
+  useEffect(() => {
+    const getData = async () => {
+        try {
+          const res = await axios.get(`${process.env.REQUEST}admin/getSecondBanner`)
+          setSecondBanner(res?.data?.data?.secondBanner)
+        } catch (error) {
+          toast.error(error?.response?.message?.split(':')[1] || error?.response?.message, {position: 'bottom-right'})
+        }
+    }
+    getData()
+  }, [])
+
   return (
     <>
       <Head>
@@ -44,7 +72,16 @@ export default function Home() {
       </Head>
         
           <Header/>
-          <Hero src={'/images/deneme.jpg'} discount={25} title={'Fifa 23'} price={'119.90'}/>
+          <Hero 
+          src={firstBanner?.bannerImage} 
+          discount={firstBanner?.discountRate} 
+          title={firstBanner?.name} 
+          price={formatter.format(firstBanner?.price)}
+          discountPrice={firstBanner?.discountPrice}
+          discountDate={firstBanner?.discountDate}
+          preOrderDate={firstBanner?.preOrderDate}
+          href={firstBanner?.seo}
+          />
           <main>
           <section className='container 1336:mt-[460px] 450:mt-[320px] mt-[230px]'>
             <GameWrapper
@@ -65,7 +102,15 @@ export default function Home() {
 
           <Category/>
 
-          <Banner src={'/images/re4.jpg'} discount={14} title={'Resident Evil 4'} price={'84.90'}/>
+          <Banner 
+          src={secondBanner?.bannerImage} 
+          discount={secondBanner?.discountRate} 
+          title={secondBanner?.name} 
+          price={formatter.format(secondBanner?.price)}
+          discountPrice={secondBanner?.discountPrice}
+          discountDate={secondBanner?.discountDate}
+          preOrderDate={secondBanner?.preOrderDate}
+          href={secondBanner?.seo}/>
 
           <section className='container my-[15px]'>
             <Weekly/>

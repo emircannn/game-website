@@ -29,8 +29,8 @@ const LastFavorited = ({
             <div className="flex items-center justify-between gap-[10px] text-white text-[13px] font-medium">
                 <span className="line-clamp-1">{game?.name}</span>
                 <div className="flex items-center gap-[6px]">
-                <span>{discountPrice}</span>
-                <span className={`${discountPrice && 'line-through opacity-90'}`}>{price}</span>
+               {game?.discountPrice && <span>{discountPrice}</span>}
+                <span className={`${game?.discountPrice && 'line-through opacity-90'}`}>{price}</span>
                 </div>
             </div>
         </div>

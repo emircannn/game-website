@@ -28,7 +28,7 @@ const Horizontal = ({
 
   return (
     <div className='flex w-full flex-col'>
-        <div className='w-full h-[210px] hover:scale-105 duration-300 cursor-pointer relative group overflow-hidden rounded-xl'>
+        <div className='w-full h-[210px] hover:scale-105 duration-300 cursor-pointer relative group overflow-hidden rounded-xl hover:neon-blue'>
         <Link href={`/oyun/${data?.seo}`}>
             <Image alt={data?.name} src={data?.coverImage} fill quality={100} className='w-full h-full object-cover group-hover:opacity-0 duration-500'/>
             <Image alt={data?.name} src={data?.bannerImage} fill quality={100} className='w-full h-full object-cover absolute opacity-0 group-hover:opacity-100 
