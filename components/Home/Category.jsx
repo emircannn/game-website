@@ -36,7 +36,7 @@ const Category = () => {
         {page > 1 && <button className='button'>Hepsini Gör</button>}
         </div>
 
-        <div className='mt-[30px] grid gap-[10px] 1140:gap-[30px] grid-cols-3 max-768:grid-cols-2 768:min-h-[520px]'>
+        <div className='mt-[30px] grid gap-[10px] 1140:gap-[30px] grid-cols-3 max-768:grid-cols-2 768:min-h-[520px] relative'>
         {!loading ? 
           data?.length > 0 ?
             data?.map((item,i) => (

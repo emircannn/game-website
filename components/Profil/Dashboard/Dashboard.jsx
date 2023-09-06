@@ -10,7 +10,7 @@ import Loading from '@/components/UI & Layout/Loading';
 const Dashboard = () => {
   const {user} = useContext(UserContext)
 
-  const [data, setData] = useState(null)
+  const [data, setData] = useState()
 
   useEffect(() => {
     const getData = async () => {

@@ -11,13 +11,12 @@ import Footer from "@/components/UI & Layout/Footer"
 import GameWrapper from "@/components/UI & Layout/GameWrapper"
 import Header from "@/components/UI & Layout/Header"
 import Loading from "@/components/UI & Layout/Loading"
-import { getGameBySeo } from "@/utils/Requests"
+import { UserContext } from "@/context/userContext"
+import { getGameBySeo, getWithSeo } from "@/utils/Requests"
 import { seoDesc } from "@/utils/helper"
-import axios from "axios"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { Fragment, useEffect, useState } from "react"
-import { toast } from "react-hot-toast"
+import { Fragment, useContext, useEffect, useState } from "react"
 
 const index = () => {
 
@@ -25,11 +24,23 @@ const index = () => {
   const {query} = useRouter()
   const {gameSeo} = query
   const [data,setData] = useState()
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
   useEffect(() => {
     if (gameSeo) {
       getGameBySeo(setData, gameSeo)
     }
   }, [gameSeo])
+
+  const [reviews, SetReviews] = useState()
+  const {user} = useContext(UserContext)
+
+  useEffect(() => {
+    if(data) {
+      getWithSeo(data?.seo, SetReviews, page, setTotalPages)
+    }
+  }, [data, page])
+  
 
   if(!data) {
     return <Loading/>
@@ -74,6 +85,9 @@ const index = () => {
       <Reviews
       data={data}
       routeReview='review'
+      reviews={reviews}
+      user={user}
+      totalPages={totalPages}
       />
 
       <GameWrapper
@@ -95,6 +109,9 @@ const index = () => {
     setShowMore={setShowMore} 
     showMore={showMore}
     data={data}
+    user={user}
+    reviews={reviews}
+    totalPages={totalPages}
     />
     <Footer/>
     </Fragment>

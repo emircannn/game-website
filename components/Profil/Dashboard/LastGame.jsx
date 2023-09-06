@@ -1,10 +1,14 @@
+import { formatter } from '@/utils/helper'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaGamepad } from 'react-icons/fa'
 
 const LastGame = ({
-  game
+  game,
+  currentUser
 }) => {
+  const price = formatter.format(game?.price)
+  const discountPrice = formatter.format(game?.discountPrice)
   return (
     <div className="col-span-4 768:col-span-2 w-full h-[350px] rounded-xl bg-primary-lighter flex items-center justify-center flex-col">
         <FaGamepad size={30} className="text-secondary-light"/>
@@ -23,15 +27,15 @@ const LastGame = ({
             <div className="flex items-center justify-between gap-[10px] text-white text-[13px] font-medium">
                 <span className="line-clamp-1">{game?.name}</span>
                 <div className="flex items-center gap-[6px]">
-                <span>{dicountPrice}</span>
-                <span className={`${dicountPrice && 'line-through opacity-90'}`}>{price}</span>
+                {game?.discountPrice && <span>{discountPrice}</span>}
+                <span className={`${game?.discountPrice && 'line-through opacity-90'}`}>{price}</span>
                 </div>
             </div>
         </div>
         </Link>
         :
         <div className='text-[13px] h-[179.5px] text-white font-medium flex items-center justify-center'>
-            Henüz bir oyuna sahip değilsiniz.
+            {currentUser ? 'Kullanıcı bir oyuna sahip değil.' : 'Henüz bir oyuna sahip değilsiniz.'}
         </div>
         }
     </div>

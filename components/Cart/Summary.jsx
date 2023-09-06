@@ -2,9 +2,11 @@ import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs"
 import Button from "../UI & Layout/Form/Button"
 import { useRouter } from "next/router"
 import { formatter } from "@/utils/helper"
+import { addOrder } from "@/utils/Requests"
 
 const Summary = ({
-    data
+    data,
+    user
 }) => {
 
     const {push} = useRouter()
@@ -31,6 +33,7 @@ const Summary = ({
                 </div>
 
                 <Button
+                    onClick={() => addOrder(user, data)}
                     height='h-[55px]'
                     title='Ödeme Yap'
                     iconRight={<BsArrowRightShort size={24} className="text-white"/>}

@@ -14,7 +14,7 @@ const WishlistItem = ({
     const isCart = cart?.game?.find((item) => item._id === data?._id)
 
   return (
-    <Link href={data?.seo}>
+    <Link href={`/oyun/${data?.seo}`}>
         <div className="flex items-center w-full justify-between">
         <div className="flex items-center h-full gap-[10px]">
             <div className="w-[130px] aspect-[2/1] rounded-xl overflow-hidden shrink-0 relative">

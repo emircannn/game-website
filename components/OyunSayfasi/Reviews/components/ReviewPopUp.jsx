@@ -4,22 +4,23 @@ import Button from "@/components/UI & Layout/Form/Button";
 import Textarea from "@/components/UI & Layout/Form/Textarea";
 import { UserContext } from "@/context/userContext";
 import tailwindConfig from "@/tailwind.config"
+import { createReview } from "@/utils/Requests";
 import { useContext, useState } from "react";
 import { CgClose } from "react-icons/cg";
 
-const ReviewPopUp = ({setShow, width, height}) => {
-    const [value, setValue] = useState(2);
+const ReviewPopUp = ({setShow, width, height, game}) => {
+    const [value, setValue] = useState(3);
     const [text, setText] = useState('');
+
+    console.log(text)
 
     const {user} = useContext(UserContext)
 
-    const minLength = 60;
+    const minLength = 30;
     const remainingChars = 0 + text.length;
 
     function handleChange(event) {
-        if (event.target.value.length <= minLength) {
           setText(event.target.value);
-        }
       }
 
   return (
@@ -69,6 +70,7 @@ const ReviewPopUp = ({setShow, width, height}) => {
                 <Button
                 title='Değerlendir'
                 wfull={true}
+                onClick={() => createReview({user, game, rate: value, review: text})}
                 disabled={remainingChars < minLength }
                 />
                 </div>

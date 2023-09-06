@@ -8,8 +8,12 @@ import SetReview from "../Reviews/SetReview"
 import RecentReviews from "../Reviews/components/RecentReviews"
 import Button from "@/components/UI & Layout/Form/Button"
 import GameWrapper from "@/components/UI & Layout/GameWrapper"
+import { useRouter } from "next/router"
 
-const Responsive = ({setShowMore, showMore, data}) => {
+const Responsive = ({setShowMore, showMore, data, user, reviews, totalPages}) => {
+
+    const {push} = useRouter()
+
   return (
     <div className="768:hidden ">
         <Hero src={data?.bannerImage} height='h-[300px]'/>
@@ -51,16 +55,22 @@ const Responsive = ({setShowMore, showMore, data}) => {
             />
 
             <div className='grid grid-rows-3 grid-cols-1 gap-[10px] w-full'>
-                <RecentReviews/>
-                <RecentReviews/>
-                <RecentReviews/>
+                {reviews?.map((review, i) => (
+                    <RecentReviews
+                    user={user}
+                    key={i}
+                    data={review}
+                />
+                ))}
             </div>
 
             <div className='align-cntr mt-[10px]'>
+            {totalPages && totalPages > 1 ? 
             <Button
             title='Tamamını Gör'
+            onClick={() => push(`/degerlendirmeler/${data?.seo}`)}
             textSize='13px'
-            />
+            /> : null}
         </div>
             </div>
 

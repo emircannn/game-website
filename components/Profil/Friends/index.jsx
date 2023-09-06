@@ -4,17 +4,22 @@ import { useState } from "react"
 import { Collapse } from "@mui/material"
 import Friend from "./Friend"
 
-const FriendsPage = () => {
+const FriendsPage = ({
+    friendsList,
+    requestList,
+    user
+}) => {
 
     const [requests, setRequests] = useState(false)
     const [friends, setFriends] = useState(true)
 
   return (
     <div className="my-[30px] flex flex-col gap-[20px] 768:gap-[40px]">
+        {requestList && 
         <div className="flex flex-col gap-[10px]">
             <div className="flex items-center justify-between">
             <h4 className="text-[16px] 450:text-[22px] font-semibold text-white">
-                İstekler (3)
+                İstekler ({requestList?.friendRequests?.length})
             </h4>
 
             <button
@@ -25,18 +30,27 @@ const FriendsPage = () => {
             </div>
 
             <Collapse in={requests} timeout='auto' unmountOnExit>
-            <div className="grid grid-cols-2 450:grid-cols-3 768:grid-cols-4 gap-[10px] 768:gap-[20px] mt-[15px]">
-                <RequestProfil/>
-                <RequestProfil/>
-                <RequestProfil/>
+            <div className="grid grid-cols-2 450:grid-cols-3 768:grid-cols-4 gap-[10px] 768:gap-[20px] mt-[15px] relative">
+                {requestList?.friendRequests?.length > 0 ? 
+                requestList?.friendRequests?.map((friend, i) => (
+                    <RequestProfil
+                        data={friend}
+                        key={i}
+                        user={user}
+                    />
+                )): 
+                <div className="text-white font-semibold text-[14px] absolute w-full top-4 left-0 flex items-center justify-center">
+                    Liste Boş
+                </div>
+                }
             </div>
             </Collapse>
-        </div>
+        </div>}
 
         <div className="flex flex-col gap-[10px]">
             <div className="flex items-center justify-between">
             <h4 className="text-[16px] 450:text-[22px] font-semibold text-white">
-                Arkadaşlar (5)
+                Arkadaşlar ({friendsList?.friends?.length})
             </h4>
 
             <button
@@ -47,12 +61,19 @@ const FriendsPage = () => {
             </div>
 
             <Collapse in={friends} timeout='auto' unmountOnExit>
-            <div className="grid grid-cols-2 450:grid-cols-3 768:grid-cols-4 gap-[10px] 768:gap-[20px] mt-[15px]">
-                <Friend/>
-                <Friend/>
-                <Friend/>
-                <Friend/>
-                <Friend/>
+            <div className="grid grid-cols-2 450:grid-cols-3 768:grid-cols-4 gap-[10px] 768:gap-[20px] mt-[15px] relative">
+                {friendsList?.friends.length > 0 ?
+                friendsList?.friends?.map((friend, i) => (
+                    <Friend
+                        data={friend}
+                        key={i}
+                        user={user}
+                    />
+                )): 
+                <div className="text-white font-semibold text-[14px] absolute w-full top-4 left-0 flex items-center justify-center">
+                    Liste Boş
+                </div>
+                }
             </div>
             </Collapse>
         </div>

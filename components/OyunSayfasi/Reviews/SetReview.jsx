@@ -13,7 +13,7 @@ const SetReview = ({width, height, data}) => {
     <>
     <div className="mb-[30px] p-[30px] w-full rounded-xl bg-primary-lighter align-cntr flex-col">
         <div className="flex items-center justify-center">
-            <span className="text-[18px] font-semibold text-white mr-[12px] mb-[8px]">{data?.rating}</span>
+            <span className="text-[18px] font-semibold text-white mr-[12px] mb-[8px]">{data?.rating.toFixed(2)}</span>
             <StyledRating
               value={data?.rating}
             />
@@ -34,6 +34,7 @@ const SetReview = ({width, height, data}) => {
     height={height}
     setShow={setShow} 
     show={show}
+    game={data?._id}
     />}
     </>
   )

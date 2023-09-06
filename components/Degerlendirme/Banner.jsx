@@ -6,7 +6,8 @@ import { AiFillEdit } from "react-icons/ai"
 const Banner = ({
     bg='/images/fifa3.jpg',
     thumb='/images/fifa.jpg',
-    review
+    review,
+    back
 }) => {
   return (
     <div 
@@ -29,6 +30,7 @@ const Banner = ({
                     mt="0"
                     iconLeft={<IoIosArrowBack className="text-white"/>}
                     title='Oyun Sayfasına Geri Dön'
+                    onClick={back}
                 />
                 <Button
                     wfull

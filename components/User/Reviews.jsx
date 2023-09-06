@@ -1,22 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '@/context/userContext'
-import { toast } from 'react-hot-toast'
-import axios from 'axios'
-import ReviewBox from './ReviewBox'
-import Loading from '../UI & Layout/Loading'
-import { useRouter } from 'next/router'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import Loading from "../UI & Layout/Loading";
+import ReviewBox from "../Profil/ReviewBox";
 
-const Reviews = () => {
+
+const Reviews = ({
+    user,
+    currentUser
+}) => {
 
   const [data, setData] = useState()
-  const {user} = useContext(UserContext)
-  const {reload} = useRouter()
 
   useEffect(() => {
       if(user) {
         const getReview = async() => {
           try {
-              const token = await localStorage.getItem('authToken');
+              const token = localStorage.getItem('authToken');
               const res = await axios.get(`${process.env.REQUEST}review/getById?id=${user?._id}`, {
                   headers: {
                       Authorization: `Bearer ${token}`
@@ -32,24 +32,6 @@ const Reviews = () => {
       }
   }, [user])
 
-  const handleDeleteReview = async(id) => {
-    try {
-      const token = localStorage.getItem('authToken');
-      const res = await axios.post(`${process.env.REQUEST}review/delete?id=${id}`,{}, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-        })
-        if(!res.data.error) {
-          toast.success(res.data.message, {position: 'bottom-right'})
-          reload()
-      }
-    } catch (error) {
-      reload()
-      toast.error(error?.response?.data?.message, {position: 'bottom-right'})
-    }
-  }
-
   if (!data) {
     return <Loading/>
   }
@@ -62,13 +44,13 @@ const Reviews = () => {
               <ReviewBox
                 key={i}
                 data={item}
-                handleDelete={() => handleDeleteReview(item._id)}
+                user={currentUser}
               />
             ))}
         </div>
         :
         <div className='min-h-[calc(100vh_-_668px)] flex items-center justify-center text-white text-[14px] font-semibold'>
-              Henüz değerlendirme yapmadınız...
+            Kullanıcı henüz değerlenirme yapmadı...
         </div>
         }
     </>

@@ -3,13 +3,32 @@ import Tab from "@/components/Profil/Tab"
 import UserInfo from "@/components/Profil/UserInfo"
 import Footer from "@/components/UI & Layout/Footer"
 import Header from "@/components/UI & Layout/Header"
+import { UserContext } from "@/context/userContext"
+import { getFriendRequest, getFriends } from "@/utils/Requests"
 import Head from "next/head"
 import { useRouter } from "next/router"
+import { useContext, useEffect, useState } from "react"
 
 const Friends = () => {
 
     const {query} = useRouter()
     const {username} = query
+    const {user} = useContext(UserContext)
+
+    const [data, setData] = useState()
+    const [requests, setRequests] = useState()
+
+    useEffect(() => {
+      if(user) {
+        getFriends(setData, user)
+      }
+    }, [user])
+    useEffect(() => {
+      if(user) {
+        getFriendRequest(setRequests, user)
+      }
+    }, [user])
+    
 
   return (
     <>
@@ -18,7 +37,7 @@ const Friends = () => {
         </Head>
 
         <Header/>
-        <main className="container min-h-[calc(100vh_-_300px)]">
+        <main className="container min-h-[calc(100vh_-_288px)]">
           <UserInfo
             username={username}
           />
@@ -27,7 +46,11 @@ const Friends = () => {
             username={username}
           />
 
-          <FriendsPage/>
+          <FriendsPage
+            friendsList={data}
+            requestList={requests}
+            user={user}
+          />
         </main>
         <Footer/>
     </>

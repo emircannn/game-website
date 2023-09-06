@@ -40,6 +40,7 @@ const index = () => {
             />
             <Summary
               data={data}
+              user={user}
             />
         </main>
         <Footer/>

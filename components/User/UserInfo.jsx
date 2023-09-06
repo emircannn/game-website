@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Avatar from "../UI & Layout/Avatar"
 import Steam from '@/public/icons/steam.svg'
 import Ea from '@/public/icons/ea.svg'
@@ -5,16 +6,16 @@ import Ubisoft from '@/public/icons/ubisoft.svg'
 import Youtube from '@/public/icons/yt.svg'
 import Twitch from '@/public/icons/twitch.svg'
 import Discord from '@/public/icons/dc.svg'
-import { useContext } from "react"
-import { UserContext } from "@/context/userContext"
-import Link from "next/link"
+import AddFriend from '@/public/icons/addFriend.svg'
+import DeleteFriend from '@/public/icons/deleteFriend.svg'
 import { dateFormater } from "@/utils/helper"
-require('moment/locale/tr');
-
+import { addFriend, deleteFriend } from "@/utils/Requests"
 
 const UserInfo = ({
+    user,
+    currentUser
 }) => {
-    
+
     const Platform = ({icon, disabeled, color='#120e47', link}) => {
         return (
             <>
@@ -36,8 +37,6 @@ const UserInfo = ({
             </>
         )
     }
-    const {user} = useContext(UserContext)
-
 
     const date = dateFormater(user?.createdAt)
 
@@ -51,9 +50,28 @@ const UserInfo = ({
         />
 
         <div className="m-[15px] flex flex-col items-center">
+            {currentUser?.friends?.includes(user?._id) &&
+            <span className="px-[6px] py-[2px] rounded-full bg-secondary text-white text-[12px] font-semibold neon-blue mb-[4px]">
+                Arkadaşınız
+            </span>
+            }
+            <div className="flex items-center gap-[10px]">
             <h1 className="text-white font-semibold text-[32px]">
             {user?.username}
             </h1>
+
+            {!currentUser?.friends?.includes(user?._id) ?
+            <button 
+            onClick={() => addFriend(currentUser, user?._id)}
+            className="p-[8px] rounded-full bg-primary-lighter flex items-center justify-center hover:neon-blue duration-300">
+                <AddFriend fill='#8585f5' width='20' height='20'/>
+            </button> : 
+            <button 
+            onClick={() => deleteFriend(currentUser, user?._id)}
+            className="p-[8px] rounded-full bg-primary-lighter flex items-center justify-center hover:neon-blue duration-300">
+                <DeleteFriend fill='#8585f5' width='20' height='20'/>
+            </button>}
+            </div>
 
             <span className="text-secondary-light text-[13px]">
                 {date} Tarihinden Beri Üye

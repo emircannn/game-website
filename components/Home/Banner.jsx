@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-const Banner = ({src, title, discount, price, height, discountPrice, discountDate, preOrderDate, href}) => {
+const Banner = ({src, title, discount, price, height, discountPrice, discountDate, preOrderDate, href, data}) => {
 
   const discountDateDB = discountDate ? discountDate : null;
     const [remainingDate, setRemainingDate] = useState(calculateRemainingTime(discountDateDB));
@@ -40,10 +40,10 @@ const Banner = ({src, title, discount, price, height, discountPrice, discountDat
     <Link href={href ? `/oyun/${href}` : '/'}>
     <div className='clip-polygon 1336:h-[550px] 450:h-[400px] h-[300px] overflow-hidden w-full'>
         <div className='w-full h-full relative'>
-        <Image alt='' src={src} fill quality={100} className='w-full h-full object-cover'/>
+        {src && <Image alt='' src={src} fill quality={100} className='w-full h-full object-cover'/>}
         <span className='absolute top-0 left-0 h-full w-full bg-black/40'></span>
 
-        <div className='absolute top-0 left-0 h-full w-full 768:w-1/2 flex flex-col items-center justify-center'>
+        {data && <div className='absolute top-0 left-0 h-full w-full 768:w-1/2 flex flex-col items-center justify-center'>
             <div>
             <h3 className='text-white flex flex-col font-semibold text-[22px] max-450:text-center 1140:text-[40px] uppercase'>{title}</h3>
             <div className='flex items-center gap-[10px]'>
@@ -67,7 +67,7 @@ const Banner = ({src, title, discount, price, height, discountPrice, discountDat
                 </span>
               </div>}
             </div>
-        </div>
+        </div>}
         </div>
     </div>
     </Link>

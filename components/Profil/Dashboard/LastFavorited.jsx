@@ -4,7 +4,8 @@ import Link from "next/link"
 import { AiFillHeart } from "react-icons/ai"
 
 const LastFavorited = ({
-  game
+  game,
+  currentUser
 }) => {
 
 
@@ -37,7 +38,7 @@ const LastFavorited = ({
         </Link>
         :
         <div className='text-[13px] h-[179.5px] text-white font-medium flex items-center justify-center'>
-            İstek listeniz boş.
+            {currentUser ? 'Kullanıcının istek listesi boş' : 'İstek listeniz boş.'}
         </div>
         }
     </div>

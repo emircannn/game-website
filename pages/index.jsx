@@ -81,6 +81,7 @@ export default function Home() {
           discountDate={firstBanner?.discountDate}
           preOrderDate={firstBanner?.preOrderDate}
           href={firstBanner?.seo}
+          data={firstBanner}
           />
           <main>
           <section className='container 1336:mt-[460px] 450:mt-[320px] mt-[230px]'>
@@ -110,7 +111,9 @@ export default function Home() {
           discountPrice={secondBanner?.discountPrice}
           discountDate={secondBanner?.discountDate}
           preOrderDate={secondBanner?.preOrderDate}
-          href={secondBanner?.seo}/>
+          href={secondBanner?.seo}
+          data={secondBanner}
+          />
 
           <section className='container my-[15px]'>
             <Weekly/>
