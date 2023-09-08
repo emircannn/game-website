@@ -51,7 +51,7 @@ const Info = ({
         <div className="flex items-center justify-between">
             <h1 className="text-[14px] font-semibold text-white tracking-wide">{data?.name}</h1>
             <div className="flex items-center gap-[8px] text-[24px] text-graident">
-            {!user?.wishlist.includes(data?._id) ?
+            {user ? !user?.wishlist.includes(data?._id) ?
                 <button 
                 onClick={() => addToWishlist(user?._id, data?._id)}
                 className=" text-rose-500 hover:text-secondary duration-300 cursor-pointer">
@@ -61,7 +61,7 @@ const Info = ({
                 onClick={() => deleteToWishlist(user?._id, data?._id)}
                 className=" text-rose-500 hover:text-secondary duration-300 cursor-pointer">
                 <AiOutlineHeart/>
-                </button>}
+                </button> : null}
                 {!user &&
                     <button 
                 onClick={() => toast.error('İstek listenize ekleyebilmek için oturum açın.', {position: 'bottom-right'})}
