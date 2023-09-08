@@ -12,13 +12,13 @@ const FeedbackBox = ({like, readMore, data}) => {
 
   return (
     <div className={`rounded-xl overflow-hidden bg-gradient-to-tl from-button via-primary-lighter ${like ? 'to-success' : 'to-graident-dark'}`}>
+        <div className='aspect-video w-full cursor-pointer overflow-hidden relative group'>
         <Link href={`/oyun/${data?.game?.seo}`}>
-        <div className=' w-full cursor-pointer overflow-hidden relative group'>
             <Image alt={data?.game?.seo} src={data?.game?.coverImage} width={1500} height={750} className='w-full hover:scale-105 h-full object-cover group-hover:opacity-0 duration-500'/>
             <Image alt={data?.game?.seo} src={data?.game?.bannerImage} width={1500} height={750} className='w-full hover:scale-105 h-full object-cover absolute opacity-0 group-hover:opacity-100 
             top-0 left-0 right-0 bottom-0 duration-500'/>
-        </div>
         </Link>
+        </div>
 
         <div className="p-[20px] w-full">
             <div className="align-cntr w-full gap-[10px]">
