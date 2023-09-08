@@ -1,4 +1,4 @@
-import { addToWishlist, deleteToCart, getCart, getWishlist } from "@/utils/Requests"
+import { addToWishlist, deleteToCart } from "@/utils/Requests"
 import { formatter } from "@/utils/helper"
 import Image from "next/image"
 import Link from "next/link"
@@ -13,11 +13,12 @@ const CartItem = ({
     const isWishlist = wishlist?.find((item) => item._id === data?._id)
 
   return (
+      <div className="w-full p-[15px] rounded-xl h-full bg-primary-lighter flex items-center gap-[10px] 450:gap-[20px] hover:neon-blue duration-300">
     <Link href={`/oyun/${data?.seo}`}>
-        <div className="w-full p-[15px] rounded-xl h-full bg-primary-lighter flex items-center gap-[10px] 450:gap-[20px] hover:neon-blue duration-300">
         <div className="w-[100px] 768:w-[200px] aspect-[2/1] relative rounded-xl overflow-hidden shrink-0">
             <Image src={data?.coverImage} alt={data?.name} fill className="object-cover" quality={100}/>
         </div>
+    </Link>
 
         <div className="flex justify-between h-full w-full items-center">
             <div className="flex flex-col h-full justify-between">
@@ -50,7 +51,6 @@ const CartItem = ({
             </div>
         </div>
     </div>
-    </Link>
   )
 }
 

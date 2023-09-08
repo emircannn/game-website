@@ -13,6 +13,10 @@ export const formatter = new Intl.NumberFormat('tr-TR', {
     minimumFractionDigits: 2,
   });
 
+  export function messageDate(date) {
+    return moment(date).format('DD.MM.YYYY HH:mm');
+  }
+
   export const handleSelectImage = (event,setPhoto,setPhotoPre) => {
     const selectedFile = event.target.files[0];
     setPhoto(selectedFile);

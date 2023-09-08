@@ -88,8 +88,9 @@ const TopRight = ({
 
                 <div className="flex justify-center items-center gap-[15px]">
                     <button 
+                    disabled={!data?.stok > 0}
                     onClick={() => addToCart(user?._id, data?._id)}
-                    className="h-[55px] w-full bg-rose-500 text-white font-semibold rounded-lg align-cntr hover:bg-secondary duration-300 gap-[10px]">
+                    className="h-[55px] w-full bg-rose-500 text-white font-semibold rounded-lg align-cntr hover:bg-secondary duration-300 gap-[10px] disabled:opacity-70 disabled:cursor-not-allowed">
                         <Cart fill='#fff' width='25' height='25'/>
                         Sepete Ekle
                     </button>

@@ -416,3 +416,4 @@ export const deleteToCart = async(user, game) => {
         toast.error(error?.response?.message?.split(':')[1] || error?.response?.data?.message, {position: 'bottom-right'})
     }
 }
+

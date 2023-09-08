@@ -14,12 +14,13 @@ const WishlistItem = ({
     const isCart = cart?.game?.find((item) => item._id === data?._id)
 
   return (
-    <Link href={`/oyun/${data?.seo}`}>
-        <div className="flex items-center w-full justify-between">
+      <div className="flex items-center w-full justify-between">
         <div className="flex items-center h-full gap-[10px]">
+    <Link href={`/oyun/${data?.seo}`}>
             <div className="w-[130px] aspect-[2/1] rounded-xl overflow-hidden shrink-0 relative">
             <Image src={data?.coverImage} alt={data?.name} fill className="object-cover" quality={100}/>
             </div>
+    </Link>
 
             <div className="h-[70%] flex justify-between flex-col">
                 <p className="text-[13px] font-semibold text-white">
@@ -42,7 +43,6 @@ const WishlistItem = ({
             <AiOutlineArrowUp size={18} className="duration-300 group-hover:-translate-y-2"/>
         </button>}
     </div>
-    </Link>
   )
 }
 
